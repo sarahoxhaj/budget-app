@@ -6,6 +6,7 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
+
 <style>
     .center {
         border-radius: 25px;
@@ -30,9 +31,9 @@
             <p class="text-4xl font-serif" style="text-align: center; color: white;">Bugdet Manager</p>
         </b>
 
-        <div class="center p-6 h-4/5 w-2/4" style="text-align: center">
+        <div class="center p-6 h-3/4 w-2/4" style="text-align: center">
             <b>
-                <p class="text-2xl">Log In</p>
+                <p class="text-2xl">Registration</p>
             </b>
             <div class="grid grid-cols-2 " style="margin-top: 30px;">
                 <div>Using social media accounts
@@ -60,18 +61,12 @@
                     <br>
                     <br>
                     <div class="w-full max-w-xs">
-                        <form class="rounded px-8  pb-8 mb-4" action="{{route('login-user')}}" method="POST">
-
+                        <form class="rounded px-8  pb-8 mb-4" action="{{route('register-user')}}" method="POST">
                             @if(Session::has('success'))
-                            <div class="w-64 h-9 p-2 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-red-200 " role="alert">
-                                {{Session::get('success')}}
-                            </div>
+                            <div class="alert alert-success">{{Session::get('success')}} </div>
                             @endif
-
-                            @if(Session::has('msg'))
-                            <div class="w-64 h-9 p-2 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
-                                {{Session::get('msg')}}
-                            </div>
+                            @if(Session::has('fail'))
+                            <div class="alert alert-danger">{{Session::get('fail')}} </div>
                             @endif
 
                             @csrf
@@ -79,21 +74,17 @@
                                 <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" type="text" placeholder="Email" value="{{old('email')}}">
                                 <span class="text-danger">@error('email'){{$message}}@enderror</span>
                             </div>
-
-                            <div class="mb-4">
+                            <div class="mb-6">
                                 <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" placeholder="Password">
                                 <span class="text-danger">@error('password'){{$message}}@enderror</span>
                             </div>
-
-                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 pt-1 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                                Sign In
-                            </button> &nbsp; &nbsp; &nbsp;
-                            <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
-                                Forgot Password?
-                            </a>
+                            <div class="flex items-center justify-between ">
+                                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 pt-1 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                                    Register
+                                </button>
+                            </div>
                             <br>
-                            <br>
-                            <p> Don’t have an account?<a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="registration"> &nbsp; Register</a></p>
+                            <p>Already have an account?<a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="/"> &nbsp; Sign in</a></p>
                         </form>
                     </div>
 
