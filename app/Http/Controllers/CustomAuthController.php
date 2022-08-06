@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-// use Illuminate\Contracts\Session\Session as Session;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Session;
-
-
-
-
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class CustomAuthController extends Controller
 {
@@ -45,7 +44,8 @@ class CustomAuthController extends Controller
         $user->password = Hash::make($request->password);
         $res = $user->save();
         if ($res) {
-            return redirect('/')->with('success', "Account successfully registered.");
+            return view('first');
+            //return redirect('/')->with('success', "Account successfully registered.");
         } else {
             return back()->with('fail', 'Something went wrong!');
         }
@@ -62,7 +62,14 @@ class CustomAuthController extends Controller
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 $request->session()->put('loginid', $user->id);
-                return redirect('dashboard');
+
+                // $count = 0;
+                // $user->update([
+                //     'last_login_at' => Carbon::now()->toDateTimeString(),
+                // ]);
+                // $data = DB::table('users')->where('email', $request->email)->value('last_login_at');
+
+                return view('main');
             } else {
                 return back()->with('msg', 'Password is incorrect.');
             }
@@ -71,10 +78,25 @@ class CustomAuthController extends Controller
         }
     }
 
-    public function dashboard()
+    public function datas(Request $request)
     {
-        return view("main");
+        //$info = request()->all();
+        // dd($info);
+
+
+        $wallet = $request->wallet;
+        $currency = $request->currency;
+        $balance = $request->balace;
+
+        //return view('transactions')->with('wallet', $balance);
+        return view('transactions')->with(compact('wallet', 'currency', 'balance'));
     }
+
+    // public function transactions()
+    // {
+    //     return view('transactions');
+    // }
+
 
     public function logout()
     {
