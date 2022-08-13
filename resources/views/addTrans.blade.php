@@ -1,0 +1,83 @@
+@include('main')
+<style>
+    .div2 {
+        margin: auto;
+        width: 40%;
+        margin-top: -470px;
+        padding: 10px;
+        background-color: #edf2f7;
+        border-radius: 25px;
+    }
+
+    .labels {
+        text-align: left;
+        float: left;
+        margin-left: 25px;
+    }
+
+    .labels2 {
+        margin-left: 285px;
+        margin-top: -69.99px;
+    }
+</style>
+<script src="https://unpkg.com/flowbite@1.5.2/dist/datepicker.js"></script>
+<div class="div2 h-3/5 w-2/5" style="text-align: center">
+    <form action="{{route('transaction')}}" method="POST">
+        @csrf
+        <br>
+        @foreach($usersDetails as $a)
+        <p class="text-lg font-medium underline decoration-green-800 decoration-2 underline-offset-4 ">{{ $a->month }} for {{ $a->name }}</p>
+        <br>
+        <br>
+
+        <div>
+            <select id="category" name="category" class="labels rounded-xl shadow appearance-none border rounded w-56 h-12 py-3 px-5 text-gray-800 mt-0 leading-tight focus:outline-none focus:shadow-outline">
+                <option selected="">Select category</option>
+                <option value="Food & Beverages">Food & Beverages</option>
+                <option value="Transportation">Transportation</option>
+                <option value="Rentals">Rentals</option>
+                <option value="Bills">Bills</option>
+                <option value="Education">Education</option>
+                <option value="Others">Others</option>
+            </select>
+            <span class="text-danger">@error('category'){{$message}}@enderror</span>
+
+            <br>
+            <br>
+            <br>
+
+            <div class="mb-4 labels2 mt-2 w-56">
+                <input class="rounded-xl shadow appearance-none border rounded w-full h-12 py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:shadow-outline" id="amount" name="amount" type="text" placeholder="amount">
+                <span class="text-danger">@error('amount'){{$message}}@enderror</span>
+            </div>
+
+        </div>
+
+        <br>
+
+        <div class="relative w-11/12 ml-6">
+            <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+                <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                </svg>
+            </div>
+            <input datepicker="" type="text" id="date" name="date" class="shadow appearance-none border rounded bg-gray-80 border border-gray-300 text-gray-800 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 datepicker-input" placeholder="Select date">
+            <span class="text-danger">@error('date'){{$message}}@enderror</span>
+        </div>
+
+        <br>
+        <br>
+
+        <div class="mb-4 w-11/12 ml-6">
+            <input class="rounded-xl shadow appearance-none border rounded w-full py-2 px-3 text-gray-600 leading-tight focus:outline-none focus:shadow-outline italic " id="notes" name="notes" type="text" placeholder="notes (optional)">
+            <span class="text-danger">@error('notes'){{$message}}@enderror</span>
+        </div>
+
+        <button type="submit" class="mt-4 ml-96 text-emerald-400 hover:text-white border border-emerald-400 hover:bg-emerald-400 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Save</button>
+
+        @endforeach
+
+    </form>
+
+
+</div>

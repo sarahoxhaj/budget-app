@@ -12,4 +12,5 @@ class Account extends Model
         'idUseri',
         'name',
     ];
+    protected $table = 'account';
 }

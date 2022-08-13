@@ -19,6 +19,11 @@ Route::get('/getView', [CustomAuthController::class, 'getView'])->name('getView'
 
 Route::get('/budget', [CustomAuthController::class, 'budget'])->name('budget');
 Route::get('/getData', [CustomAuthController::class, 'getData'])->name('getData');
+Route::get('/transView', [CustomAuthController::class, 'transView'])->name('transView');
+
+
+Route::post('/transaction', [CustomAuthController::class, 'transaction'])->name('transaction');
+
 
 
 

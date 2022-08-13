@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Budget;
+use App\Models\Account;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Session;
@@ -12,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 
-class CustomAuthController extends Controller
+class CustomAuthController extends Controller 
 {
 
     public $x;
@@ -121,6 +123,43 @@ class CustomAuthController extends Controller
         return view("static", compact('usersDetails'));
     }
 
+    public function transView()
+    {
+        $usersDetails = DB::table('budget')
+            ->join('account', 'budget.idUseri', '=', 'account.idUseri') // joining the contacts table , where user_id and contact_user_id are same
+            ->select('budget.amount', 'budget.currency', 'budget.month', 'account.name')
+            ->get();
+
+        return view("addTrans", compact('usersDetails'));
+    }
+
+    public function transaction(Request $request)
+    {
+        $rules = [
+            'category' => 'required',
+            'amount' => 'required',
+            'date' => 'required',
+            'notes' => 'nullable',
+        ];
+
+        $customMessages = [
+            'category.required' => 'Please choose a category',
+            'amount.required' => 'Amount is required',
+            'date.required' => 'Date is required',
+        ];
+        $request->validate($rules, $customMessages);
+
+
+        $array = session()->get('id');
+        // $comments = DB::table('account')->whereIn('idUseri', $array)->get();
+        // $b = DB::table('budget')->whereIn('idUseri', $array)->get();
+        // dd($array, $comments, $b);
+
+
+        $table = Account::where('idUseri', $array)->first(['id']);
+
+        dd($table);
+    }
 
 
 
