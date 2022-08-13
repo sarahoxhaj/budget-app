@@ -6,14 +6,17 @@
 </style>
 <nav class="h-16 bg-white border-gray-200 px-2 sm:px-4 py-1.5 rounded dark:bg-gray-900" style="background-color: #009933">
     <div class="container flex flex-wrap justify-between items-center mx-auto">
-        <a href="#" class="flex items-center">
+        <a href="getData" class="flex items-center">
             <img src="https://img.icons8.com/doodle/344/coins--v1.png" width="40" height="40" style="vertical-align:middle;">
             &nbsp; &nbsp;
-            <p class="text-2xl font-serif" style="text-align: center; color: white;">Bugdet Manager</p>
+            <p class="text-2xl font-serif" style="color: white;">Bugdet Manager</p>
         </a>
 
         <div class="center hidden w-full md:block md:w-auto" id="navbar-default">
             <ul class=" text-white flex flex-col p-4 mt-4  rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0" style="background-color: #009933">
+                <li>
+                    <span id='date-time'></span>
+                </li>
                 <li>
                     <a href="#" class="block py-2 pr-4 pl-3  rounded md:bg-transparent md:text-white md:hover:text-black md:p-0 dark:text-white" aria-current="page">Add Transaction</a>
                 </li>
@@ -29,10 +32,11 @@
 <aside class="w-64" aria-label="Sidebar">
     <div class="overflow-y-auto py-44 pt-4 px-5   rounded dark:bg-gray-800">
         <ul class="space-y-2">
+            @csrf
             <li>
-                <a href="transactions" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+                <a href="{{route('getData')}}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                     <img width="35" height="35" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iNzUycHQiIGhlaWdodD0iNzUycHQiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDc1MiA3NTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8Zz4KICA8cGF0aCBkPSJtNTc0LjMxIDM2NC4xNnYtODguNzk3YzAtNS45MTgtMy45NDUzLTkuODY3Mi05Ljg2NzItOS44NjcyaC0yNC42NjR2LTUzLjI3M2MwLTUuOTE4LTMuOTQ1My05Ljg2NzItOS44NjcyLTkuODY3Mi0zLjk0NTMgMC0xMTYuNDItMC45ODgyOC0xMTkuMzggMC45ODgyOGwtNDQuMzk1LTQzLjQxNGMtMy45NDUzLTMuOTQ1My05Ljg2NzItMy45NDUzLTEzLjgxMiAwbC00My40MSA0My40MWMtMy45NDkyLTAuOTg0MzgtMTA2LjU2LTAuOTg0MzgtMTEwLjUtMC45ODQzOC0yOS41OTggMC01NC4yNjYgMjQuNjY0LTU0LjI2NiA1NC4yNjZ2MjkxLjA1YzAgMjYuNjQxIDIxLjcwNyA0Ny4zNTkgNDcuMzU5IDQ3LjM1OWgzNzIuOTVjNS45MTggMCA5Ljg2NzItMy45NDUzIDkuODY3Mi05Ljg2NzJ2LTg4Ljc5N2MxOC43NDYtMS45NzI3IDMzLjU0Ny0xOC43NDYgMzMuNTQ3LTM3LjQ5MnYtNTcuMjIzYy0wLjAwMzkwNi0xOS43MzQtMTQuODA1LTM1LjUyLTMzLjU1MS0zNy40OTZ6bS01NC4yNjItMTQyLjA3djQzLjQxaC00Ny4zNTlsLTQzLjQxLTQzLjQxem0tMTYwLjgyLTQxLjQzOCA4NC44NTIgODQuODUyaC0xNjkuN3ptLTE2MC44MiA0MS40MzhoOTEuNzU4bC00My40MSA0My40MS01NS4yNTQgMC4wMDM5MDZjLTEwLjg1MiAwLTE5LjczNCAyLjk2MDktMjcuNjI1IDguODc4OXYtMTcuNzU4Yy0wLjAwMzkwNi0xOC43NDYgMTUuNzg1LTM0LjUzNSAzNC41MzEtMzQuNTM1em0tNi45MDYyIDM1My4yMWMtMTUuNzg1IDAtMjcuNjI1LTEyLjgyNC0yNy42MjUtMjcuNjI1di0yMzQuODJjMC0xNC44MDEgMTIuODI0LTI2LjY0MSAyNy42MjUtMjYuNjQxaDM2My4wOHY3Ny45NDVsLTg5Ljc4NS0wLjAwMzkwNmMtMjAuNzE5IDAtMzguNDc3IDE2Ljc3My0zOC40NzcgMzguNDc3djU3LjIyM2MwIDIwLjcxOSAxNi43NzMgMzguNDc3IDM4LjQ3NyAzOC40NzdoODkuNzgxdjc3Ljk0NWwtMzYzLjA3IDAuMDAzOTA2em0zOTYuNjItMTE2LjQyYzAgOS44NjcyLTcuODk0NSAxOC43NDYtMTguNzQ2IDE4Ljc0NmgtMTA0LjU4Yy05Ljg2NzIgMC0xOC43NDYtNy44OTQ1LTE4Ljc0Ni0xOC43NDZ2LTU3LjIyM2MwLTkuODY3MiA3Ljg5NDUtMTguNzQ2IDE4Ljc0Ni0xOC43NDZoMTA0LjU4YzkuODY3MiAwIDE4Ljc0NiA3Ljg5NDUgMTguNzQ2IDE4Ljc0NnoiLz4KICA8cGF0aCBkPSJtNDgyLjU2IDQyMS4zOWMtNi45MDYyLTIuOTYwOS0xMy44MTIgMS45NzI3LTEzLjgxMiA4Ljg3ODkgMCA0LjkzMzYgMy45NDUzIDkuODY3MiA5Ljg2NzIgOS44NjcyIDUuOTE4IDAgOS44NjcyLTQuOTMzNiA5Ljg2NzItOS44NjcyLTAuMDAzOTA3LTMuOTQ1My0yLjk2NDgtNy44OTQ1LTUuOTIxOS04Ljg3ODl6Ii8+CiA8L2c+Cjwvc3ZnPgo=">
-                    <span class="ml-3">Transactions</span>
+                    <span class="ml-3">Budget</span>
                 </a>
             </li>
             <li>
@@ -87,3 +91,11 @@
         </ul>
     </div>
 </aside>
+<script>
+    var today = new Date();
+    var year = today.getFullYear();
+    var mes = today.getMonth() + 1;
+    var dia = today.getDate();
+    var fecha = dia + "/" + mes + "/" + year;
+    document.getElementById('date-time').innerHTML = fecha;
+</script>

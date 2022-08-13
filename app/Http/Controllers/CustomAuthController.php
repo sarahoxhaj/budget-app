@@ -10,9 +10,13 @@ use Session;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 
 class CustomAuthController extends Controller
 {
+
+    public $x;
+
     public function login()
     {
         return "/";
@@ -44,8 +48,8 @@ class CustomAuthController extends Controller
         $user->password = Hash::make($request->password);
         $res = $user->save();
         if ($res) {
+            session(['id' => $user->id]);
             return view('first');
-            //return redirect('/')->with('success', "Account successfully registered.");
         } else {
             return back()->with('fail', 'Something went wrong!');
         }
@@ -61,7 +65,14 @@ class CustomAuthController extends Controller
         $user = User::where('email', '=', $request->email)->first();
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
+                session(['userModel' => $user]);
+                session(['user' => "loggedin"]);
+
+                session(['id' => $user->id]);
+                session(['email' => $user->email]);
+
                 $request->session()->put('loginid', $user->id);
+
 
                 // $count = 0;
                 // $user->update([
@@ -81,21 +92,44 @@ class CustomAuthController extends Controller
     public function datas(Request $request)
     {
         //$info = request()->all();
-        // dd($info);
-
 
         $wallet = $request->wallet;
         $currency = $request->currency;
         $balance = $request->balace;
 
-        //return view('transactions')->with('wallet', $balance);
+        $array = session()->get('id');
+
+        $date = Carbon::now();
+        $monthName = $date->format('F');
+        $values = array('idUseri' => $array, 'month' => $monthName, 'currency' => $currency, 'amount' => $balance, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now());
+        DB::table('budget')->insert($values);
+
+        $values = array('idUseri' => $array, 'name' => $wallet, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now());
+        DB::table('account')->insert($values);
+
+
         return view('transactions')->with(compact('wallet', 'currency', 'balance'));
     }
 
-    // public function transactions()
-    // {
-    //     return view('transactions');
-    // }
+    public function getData()
+    {
+        $usersDetails = DB::table('budget')
+            ->join('account', 'budget.idUseri', '=', 'account.idUseri') // joining the contacts table , where user_id and contact_user_id are same
+            ->select('budget.amount', 'budget.currency', 'budget.month', 'account.name')
+            ->get();
+
+        return view("static", compact('usersDetails'));
+    }
+
+
+
+
+
+
+
+
+
+
 
 
     public function logout()

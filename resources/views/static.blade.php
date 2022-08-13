@@ -10,24 +10,23 @@
     }
 </style>
 <div class="div2 h-3/5 w-2/5" style="text-align: center">
-    <form action="{{route('datas')}}" method="POST">
+    <form action="#" method="POST">
         @csrf
         <br>
         <br>
-        <p class="text-lg font-medium underline decoration-green-800 decoration-2 underline-offset-4">This Month for {{ $wallet }}</p>
+        @foreach($usersDetails as $a)
+        <p class="text-lg font-medium underline decoration-green-800 decoration-2 underline-offset-4">{{ $a->month }} for {{ $a->name }}</p>
         <br>
         <br>
-
         <span align="left">Inflow</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-        <span align="right" class="text-blue-500">+ {{ $currency }} {{ $balance }}</span>
+        <span align="right" class="text-blue-500">+ {{ $a->currency }} {{ $a->amount }}</span>
         <br>
         <br>
         <span align="left">Outflow</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-        <span align="right" class="text-red-500">{{ $currency }} 0</span>
+        <span align="right" class="text-red-500">{{ $a->currency }} 0</span>
         <br>
-
-
-
-
+        @endforeach
     </form>
+
+
 </div>
