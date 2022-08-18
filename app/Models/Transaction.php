@@ -13,7 +13,8 @@ class Transaction extends Model
         'idAccount',
         'idCategory',
         'amount',
-        'notes',
+        'notes'
 
     ];
+    public $table = 'transaction';
 }

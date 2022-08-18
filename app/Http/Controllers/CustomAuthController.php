@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Budget;
 use App\Models\Account;
+use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Session;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 
-class CustomAuthController extends Controller 
+class CustomAuthController extends Controller
 {
 
     public $x;
@@ -115,9 +116,11 @@ class CustomAuthController extends Controller
 
     public function getData()
     {
+        $useri = session()->get('id');
         $usersDetails = DB::table('budget')
             ->join('account', 'budget.idUseri', '=', 'account.idUseri') // joining the contacts table , where user_id and contact_user_id are same
             ->select('budget.amount', 'budget.currency', 'budget.month', 'account.name')
+            ->where('budget.idUseri', '=', $useri)
             ->get();
 
         return view("static", compact('usersDetails'));
@@ -125,41 +128,64 @@ class CustomAuthController extends Controller
 
     public function transView()
     {
+        $useri = session()->get('id');
+
         $usersDetails = DB::table('budget')
-            ->join('account', 'budget.idUseri', '=', 'account.idUseri') // joining the contacts table , where user_id and contact_user_id are same
-            ->select('budget.amount', 'budget.currency', 'budget.month', 'account.name')
+            ->join('account', 'budget.idUseri', '=', 'account.idUseri')
+            ->where('budget.idUseri', '=', $useri)
+            ->select('budget.idUseri', 'budget.amount', 'budget.currency', 'budget.month', 'account.name')
             ->get();
 
         return view("addTrans", compact('usersDetails'));
+
+
+
+        //dd($usersDetails);
     }
 
     public function transaction(Request $request)
     {
         $rules = [
             'category' => 'required',
-            'amount' => 'required',
-            'date' => 'required',
+            'amount' => 'required|integer',
             'notes' => 'nullable',
         ];
 
         $customMessages = [
             'category.required' => 'Please choose a category',
             'amount.required' => 'Amount is required',
-            'date.required' => 'Date is required',
+            'amount.integer' => 'Amount must be a number',
         ];
         $request->validate($rules, $customMessages);
 
+        $useri = session()->get('id');
 
-        $array = session()->get('id');
-        // $comments = DB::table('account')->whereIn('idUseri', $array)->get();
-        // $b = DB::table('budget')->whereIn('idUseri', $array)->get();
-        // dd($array, $comments, $b);
+        //$account = Account::where('idUseri', $useri)->first(['id']);
+        $account = DB::table('account')->where('idUseri', $useri)->value('id');
+        //$categ = Category::where('name', $request->category)->first(['id']);
+        $categ = DB::table('category')->where('name', $request->category)->value('id');
+
+        // DB::table('transaction')->insert(
+        //     ['idUseri' => $useri, 'idAccount' => $account, 'idCategory' => $categ, 'amount' => $request->amount, 'notes' => $request->notes, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]
+        // );
 
 
-        $table = Account::where('idUseri', $array)->first(['id']);
+        $values = array('idUseri' => $useri, 'idAccount' => $account, 'idCategory' => $categ, 'amount' => $request->amount, 'notes' => $request->notes, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now());
+        DB::table('transaction')->insert($values);
 
-        dd($table);
+        return view('main');
+
+        //dd($account);
     }
+
+
+
+
+
+
+
+
+
 
 
 

@@ -16,4 +16,5 @@ class User extends Authenticatable
         'google_id',
         'last_login_at',
     ];
+    public $table = 'users';
 }

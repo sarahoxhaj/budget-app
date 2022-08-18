@@ -14,4 +14,5 @@ class Budget extends Model
         'currency',
         'amount',
     ];
+    public $table = 'budget';
 }

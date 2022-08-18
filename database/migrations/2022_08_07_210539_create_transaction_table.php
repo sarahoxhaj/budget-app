@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('transaction', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->foreignId('idUseri')->references('id')->on('users');
             $table->foreignId('idAccount')->references('id')->on('account');
             $table->foreignId('idCategory')->references('id')->on('category');
