@@ -193,7 +193,26 @@ class CustomAuthController extends Controller
 
         $sum = Transaction::where('idUseri', $useri)->sum('total');
 
-        return view('details', ['usersDetails' => $usersDetails, 'sum' => $sum]);
+
+        // $dt = DB::table('transaction')
+        //     ->where('idUseri', '=', $useri)
+        //     ->get();
+
+        $dt = DB::table('transaction')
+            ->join('category', 'category.id', '=', 'transaction.idCategory')
+            ->join('budget', 'budget.idUseri', '=', 'transaction.idUseri')
+            ->select('category.name', 'transaction.total', 'transaction.notes', 'budget.currency')
+            ->where('transaction.idUseri', '=', $useri)
+            ->get();
+
+        // $categ = DB::table('category')
+        //     ->join('transaction', 'category.id', '=', 'transaction.idCategory')
+        //     ->select('category.name')
+        //     ->where('budget.idUseri', '=', $useri)
+        //     ->groupBy('transaction.idUseri')
+        //     ->get();
+
+        return view('details', ['usersDetails' => $usersDetails, 'sum' => $sum, 'dt' => $dt]);
     }
 
     public function logout()
