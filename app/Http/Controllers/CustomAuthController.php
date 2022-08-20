@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Budget;
 use App\Models\Account;
 use App\Models\Category;
+use App\Models\Transaction;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Session;
@@ -118,12 +119,27 @@ class CustomAuthController extends Controller
     {
         $useri = session()->get('id');
         $usersDetails = DB::table('budget')
-            ->join('account', 'budget.idUseri', '=', 'account.idUseri') // joining the contacts table , where user_id and contact_user_id are same
-            ->select('budget.amount', 'budget.currency', 'budget.month', 'account.name')
+            ->join('account', 'budget.idUseri', '=', 'account.idUseri')
+            ->join('transaction', 'budget.idUseri', '=', 'transaction.idUseri')
+            ->select('budget.amount', 'budget.currency', 'budget.month', 'account.name', 'transaction.total')
             ->where('budget.idUseri', '=', $useri)
+            ->groupBy('transaction.idUseri')
             ->get();
 
-        return view("static", compact('usersDetails'));
+        $sum = Transaction::where('idUseri', $useri)->sum('total');
+
+        if ($sum > 0) {
+            return view('static', ['usersDetails' => $usersDetails, 'sum' => $sum]);
+        } else if ($sum == 0) {
+
+            $details = DB::table('budget')
+                ->join('account', 'budget.idUseri', '=', 'account.idUseri')
+                ->where('budget.idUseri', '=', $useri)
+                ->select('budget.idUseri', 'budget.amount', 'budget.currency', 'budget.month', 'account.name')
+                ->get();
+
+            return view('plain', compact('details'));
+        }
     }
 
     public function transView()
@@ -137,10 +153,6 @@ class CustomAuthController extends Controller
             ->get();
 
         return view("addTrans", compact('usersDetails'));
-
-
-
-        //dd($usersDetails);
     }
 
     public function transaction(Request $request)
@@ -159,43 +171,30 @@ class CustomAuthController extends Controller
         $request->validate($rules, $customMessages);
 
         $useri = session()->get('id');
-
-        //$account = Account::where('idUseri', $useri)->first(['id']);
         $account = DB::table('account')->where('idUseri', $useri)->value('id');
-        //$categ = Category::where('name', $request->category)->first(['id']);
         $categ = DB::table('category')->where('name', $request->category)->value('id');
 
-        // DB::table('transaction')->insert(
-        //     ['idUseri' => $useri, 'idAccount' => $account, 'idCategory' => $categ, 'amount' => $request->amount, 'notes' => $request->notes, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now()]
-        // );
-
-
-        $values = array('idUseri' => $useri, 'idAccount' => $account, 'idCategory' => $categ, 'amount' => $request->amount, 'notes' => $request->notes, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now());
+        $values = array('idUseri' => $useri, 'idAccount' => $account, 'idCategory' => $categ, 'total' => $request->amount, 'notes' => $request->notes, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now());
         DB::table('transaction')->insert($values);
 
         return view('main');
-
-        //dd($account);
     }
 
+    public function details()
+    {
+        $useri = session()->get('id');
+        $usersDetails = DB::table('budget')
+            ->join('account', 'budget.idUseri', '=', 'account.idUseri')
+            ->join('transaction', 'budget.idUseri', '=', 'transaction.idUseri')
+            ->select('budget.amount', 'budget.currency', 'budget.month', 'account.name', 'transaction.total')
+            ->where('budget.idUseri', '=', $useri)
+            ->groupBy('transaction.idUseri')
+            ->get();
 
+        $sum = Transaction::where('idUseri', $useri)->sum('total');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return view('details', ['usersDetails' => $usersDetails, 'sum' => $sum]);
+    }
 
     public function logout()
     {

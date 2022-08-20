@@ -14,7 +14,7 @@
         @csrf
         <br>
         <br>
-        @foreach($usersDetails as $a)
+        @foreach($details as $a)
         <p class="text-lg font-medium underline decoration-green-800 decoration-2 underline-offset-4">{{ $a->month }} for {{ $a->name }}</p>
         <br>
         <br>
@@ -22,15 +22,9 @@
         <span align="right" class="text-blue-500">+ {{ $a->currency }} {{ $a->amount }}</span>
         <br>
         <br>
-        <span align="left">Outflow</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-        <a href="{{route('details')}}"><span align="right" class="text-red-500"> - {{ $a->currency }} {{ $sum }}</span></a>
-
+        <span align="left">Outflow</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        <span align="right" class="text-red-500">{{ $a->currency }} 0</span>
         <br>
-        <br>
-        <hr style="width:70%;text-align:left;margin-left:80;border-width:1;border: 1px solid silver">
-        <br>
-        <span align="left">Balance</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-        <span align="right">{{ $a->amount  -  $sum }}</span>
         @endforeach
     </form>
 

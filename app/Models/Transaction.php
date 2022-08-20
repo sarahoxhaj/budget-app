@@ -12,7 +12,7 @@ class Transaction extends Model
         'idUseri',
         'idAccount',
         'idCategory',
-        'amount',
+        'total',
         'notes'
 
     ];

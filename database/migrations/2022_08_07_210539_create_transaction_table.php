@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('idUseri')->references('id')->on('users');
             $table->foreignId('idAccount')->references('id')->on('account');
             $table->foreignId('idCategory')->references('id')->on('category');
-            $table->integer('amount');
+            $table->integer('total');
             $table->longText('notes')->nullable();
             $table->timestamps();
         });

@@ -8,6 +8,16 @@
         background-color: #edf2f7;
         border-radius: 25px;
     }
+
+    .div3 {
+        margin: auto;
+        width: 21%;
+        margin-top: -470px;
+        padding: 10px;
+        background-color: #edf2f7;
+        border-radius: 25px;
+        margin-right: 50px;
+    }
 </style>
 <div class="div2 h-3/5 w-2/5" style="text-align: center">
     <form action="#" method="POST">
@@ -23,8 +33,7 @@
         <br>
         <br>
         <span align="left">Outflow</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-        <a href="{{route('details')}}"><span align="right" class="text-red-500"> - {{ $a->currency }} {{ $sum }}</span></a>
-
+        <span align="right" class="text-red-500"> - {{ $a->currency }} {{ $sum }}</span>
         <br>
         <br>
         <hr style="width:70%;text-align:left;margin-left:80;border-width:1;border: 1px solid silver">
@@ -33,6 +42,23 @@
         <span align="right">{{ $a->amount  -  $sum }}</span>
         @endforeach
     </form>
-
-
+</div>
+<div class="div3 h-40" style="text-align: center">
+    <form action="#" method="POST">
+        <p class="text-lg font-medium underline decoration-green-800 decoration-2 underline-offset-4"> category </p>
+        <br>
+        <br>
+        <span align="left">Amount</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        <span align="right" class="text-blue-500">vlera</span>
+        <br>
+        <br>
+        <span align="left">Notes</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        <span align="right" class="text-red-500"> notes</span>
+        <br>
+        <br>
+        <hr style="width:70%;text-align:left;margin-left:80;border-width:1;border: 1px solid silver">
+        <br>
+        <span align="left">Balance</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        <span align="right">{{ $a->amount  -  $sum }}</span>
+    </form>
 </div>
