@@ -18,7 +18,7 @@
                     <span id='date-time'></span>
                 </li>
                 <li>
-                    <a href="{{route('transView')}}" class="block py-2 pr-4 pl-3  rounded md:bg-transparent md:text-white md:hover:text-black md:p-0 dark:text-white" aria-current="page">Add Transaction</a>
+                    <a href="{{route('transView')}}" id="test" class="block py-2 pr-4 pl-3  rounded md:bg-transparent md:text-white md:hover:text-black md:p-0 dark:text-white" aria-current="page">Add Transaction</a>
                 </li>
                 <li>
                     <a href="logout" class="block py-2 pr-4 pl-3  rounded hover:bg-black md:hover:bg-transparent md:border-0 md:hover:text-black md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Sign out</a>
