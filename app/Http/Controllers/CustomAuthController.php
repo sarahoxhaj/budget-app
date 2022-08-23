@@ -174,10 +174,27 @@ class CustomAuthController extends Controller
         $account = DB::table('account')->where('idUseri', $useri)->value('id');
         $categ = DB::table('category')->where('name', $request->category)->value('id');
 
-        $values = array('idUseri' => $useri, 'idAccount' => $account, 'idCategory' => $categ, 'total' => $request->amount, 'notes' => $request->notes, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now());
-        DB::table('transaction')->insert($values);
+        $total = DB::table('budget')->where('idUseri', $useri)->value('amount');
+        $spent = DB::table('transaction')->where('idUseri', $useri)->sum('total');
 
-        return view('main');
+
+        if ($spent == 0) { //ska ber asnje blerje
+            if ($request->amount > $total) { //blen me shume se buxheti
+                return back()->with('msg', 'No budget for this purchase!');
+            } else {
+                $values = array('idUseri' => $useri, 'idAccount' => $account, 'idCategory' => $categ, 'total' => $request->amount, 'notes' => $request->notes, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now());
+                DB::table('transaction')->insert($values);
+                return view('main');
+            }
+        } else if ($spent != 0) { //ka blerje
+            if ($request->amount > ($total - $spent)) { //blen me shume se cka mbetur
+                return back()->with('msg', 'Not enough money left!');
+            } else {
+                $values = array('idUseri' => $useri, 'idAccount' => $account, 'idCategory' => $categ, 'total' => $request->amount, 'notes' => $request->notes, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now());
+                DB::table('transaction')->insert($values);
+                return view('main');
+            }
+        }
     }
 
     public function details()
@@ -193,11 +210,6 @@ class CustomAuthController extends Controller
 
         $sum = Transaction::where('idUseri', $useri)->sum('total');
 
-
-        // $dt = DB::table('transaction')
-        //     ->where('idUseri', '=', $useri)
-        //     ->get();
-
         $dt = DB::table('transaction')
             ->join('category', 'category.id', '=', 'transaction.idCategory')
             ->join('budget', 'budget.idUseri', '=', 'transaction.idUseri')
@@ -205,15 +217,36 @@ class CustomAuthController extends Controller
             ->where('transaction.idUseri', '=', $useri)
             ->get();
 
-        // $categ = DB::table('category')
-        //     ->join('transaction', 'category.id', '=', 'transaction.idCategory')
-        //     ->select('category.name')
-        //     ->where('budget.idUseri', '=', $useri)
-        //     ->groupBy('transaction.idUseri')
-        //     ->get();
-
         return view('details', ['usersDetails' => $usersDetails, 'sum' => $sum, 'dt' => $dt]);
     }
+
+    public function statistics()
+    {
+        $useri = session()->get('id');
+
+        if (Transaction::where('idUseri', $useri)->exists()) {
+            $record = Transaction::select('category.name', DB::raw('SUM(transaction.total) as shuma'))
+                ->leftJoin('category', 'category.id', '=', 'transaction.idCategory')
+                ->where('transaction.idUseri', '=', $useri)
+                ->groupBy('category.name')
+                ->get();
+
+            $data = [];
+
+            foreach ($record as $row) {
+                $data['label'][] = $row->name;
+                $data['data'][] = (int) $row->shuma;
+            }
+
+            $data['chart_data'] = json_encode($data);
+            return view('statistics', $data);
+        } else {
+            return view('nostats');
+        }
+    }
+
+
+
 
     public function logout()
     {

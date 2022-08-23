@@ -19,6 +19,7 @@ Route::get('/getData', [CustomAuthController::class, 'getData'])->name('getData'
 Route::get('/transView', [CustomAuthController::class, 'transView'])->name('transView');
 Route::post('/transaction', [CustomAuthController::class, 'transaction'])->name('transaction');
 Route::get('/details', [CustomAuthController::class, 'details'])->name('details');
+Route::get('/statistics', [CustomAuthController::class, 'statistics'])->name('statistics');
 
 
 

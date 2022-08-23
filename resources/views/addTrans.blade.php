@@ -108,7 +108,11 @@
 
         @endforeach
 
+        @if(Session::has('msg'))
+        <div style="margin-top: -50px;  margin-left: 60px; " class="w-7/12 h-11 p-2 text-base text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+            {{Session::get('msg')}}
+        </div>
+        @endif
+
     </form>
-
-
 </div>
