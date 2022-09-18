@@ -146,6 +146,7 @@
         @endforeach
     </form>
 </div>
+@include('footer')
 <script>
     var test = document.getElementById("test").innerText;
     if (test == 0) {

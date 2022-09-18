@@ -19,7 +19,6 @@
     }
 </style>
 
-
 <header>
     <div class="w-full h-2/3" style="background-color: #009933">
         <br>
@@ -58,20 +57,7 @@
                     <br>
                     <br>
                     <div class="w-full max-w-xs">
-                        <form class="rounded px-8  pb-8 mb-4" action="{{route('login-user')}}" method="POST">
-
-                            @if(Session::has('success'))
-                            <div class="w-64 h-9 p-2 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-red-200 " role="alert">
-                                {{Session::get('success')}}
-                            </div>
-                            @endif
-
-                            @if(Session::has('msg'))
-                            <div class="w-64 h-9 p-2 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
-                                {{Session::get('msg')}}
-                            </div>
-                            @endif
-
+                        <form class="rounded px-8  pb-8 mb-4" action="{{route('login-user')}}" method="POST" name="v" id="v">
                             @csrf
                             <div class="mb-4">
                                 <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" type="text" placeholder="Email" value="{{old('email')}}">
@@ -83,6 +69,21 @@
                                 <span class="text-danger">@error('password'){{$message}}@enderror</span>
                             </div>
 
+
+                            @if(Session::has('success'))
+                            <div class="w-64 h-9 p-2 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-red-200 " role="alert">
+                                {{Session::get('success')}}
+                            </div>
+                            @endif
+
+                            @if(Session::has('msg'))
+                            <div style="margin-top: -25px;" class="w-64 h-9 p-2 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
+                                {{Session::get('msg')}}
+                            </div>
+                            @endif
+
+
+
                             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 pt-1 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                                 Sign In
                             </button> &nbsp; &nbsp; &nbsp;
@@ -91,7 +92,7 @@
                             </a>
                             <br>
                             <br>
-                            <p> Don’t have an account?<a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="registration"> &nbsp; Register</a></p>
+                            <p> Don't have an account?<a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="registration"> &nbsp; Register</a></p>
                         </form>
                     </div>
 
@@ -100,3 +101,20 @@
         </div>
     </div>
 </header>
+
+<script>
+    $("#v").validate({
+        rules: {
+            email: {
+                required: true,
+                email: true
+            }
+        },
+        messages: {
+            email: {
+                required: "Please enter email",
+                email: "not valiiidddd"
+            },
+        },
+    })
+</script>
