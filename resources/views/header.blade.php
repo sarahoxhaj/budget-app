@@ -1,7 +1,8 @@
 <script src="https://cdn.tailwindcss.com"></script>
-{{--Jquery validator = validimi client side --}}
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+
+<!-- client side -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -57,7 +58,7 @@
                     <br>
                     <br>
                     <div class="w-full max-w-xs">
-                        <form class="rounded px-8  pb-8 mb-4" action="{{route('login-user')}}" method="POST" name="v" id="v">
+                        <form class="rounded px-8  pb-8 mb-4" action="{{route('login-user')}}" method="POST" name="login" id="login">
                             @csrf
                             <div class="mb-4">
                                 <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" name="email" type="text" placeholder="Email" value="{{old('email')}}">
@@ -103,18 +104,30 @@
 </header>
 
 <script>
-    $("#v").validate({
-        rules: {
-            email: {
-                required: true,
-                email: true
-            }
-        },
-        messages: {
-            email: {
-                required: "Please enter email",
-                email: "not valiiidddd"
+    if ($("#login").length > 0) {
+        $("#login").validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true,
+                },
+                password: {
+                    required: true,
+                    minlength: 5,
+                    maxlength: 12,
+                },
             },
-        },
-    })
+            messages: {
+                password: {
+                    required: "Please enter a password",
+                    minlength: "Password must be at least 5 characters long",
+                    maxlength: "Password must be less than 12 characters long",
+                },
+                email: {
+                    required: "Please enter an email",
+                    email: "Not a valid email."
+                },
+            },
+        })
+    }
 </script>

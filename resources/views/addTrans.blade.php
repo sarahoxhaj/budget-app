@@ -1,6 +1,10 @@
 @include('main')
 <script src="https://unpkg.com/flowbite@1.5.2/dist/datepicker.js"></script>
 
+<!-- client side -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
 <style>
     .div2 {
         margin: auto;
@@ -47,7 +51,7 @@
 </script>
 
 <div class="div2 h-auto w-2/5" style="text-align: center">
-    <form action="{{route('transaction')}}" method="POST">
+    <form action="{{route('transaction')}}" method="POST" id="trans" name="trans">
         @csrf
         <br>
         @foreach($usersDetails as $a)
@@ -116,3 +120,22 @@
 
     </form>
 </div>
+
+<script>
+    if ($("#trans").length > 0) {
+        $("#trans").validate({
+            rules: {
+                amount: {
+                    required: true,
+                    digits: true,
+                },
+            },
+            messages: {
+                amount: {
+                    required: "Please enter amount spent.",
+                    digits: "Amount must be a number.",
+                },
+            },
+        })
+    }
+</script>

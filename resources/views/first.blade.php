@@ -1,4 +1,9 @@
 <script src="https://cdn.tailwindcss.com"></script>
+
+<!-- client side -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
 <style>
     .center {
         background-color: #009933
@@ -9,6 +14,10 @@
         margin: auto;
         margin-top: 100px;
         background-color: #edf2f7;
+    }
+
+    .error {
+        color: red;
     }
 </style>
 <nav class="h-16 bg-white border-gray-200 px-2 sm:px-4 py-1.5 rounded dark:bg-gray-900" style="background-color: #009933">
@@ -33,13 +42,13 @@
     </div>
 </nav>
 <div class="div1 p-6 h-3/5 w-2/5" style="text-align: center">
-    <form action="{{route('datas')}}" method="POST">
+    <form action="{{route('datas')}}" method="POST" id="wallet" name="wallet">
         @csrf
         <p class="text-xl font-medium">Add a wallet first!</p>
         <input class="rounded-xl shadow appearance-none border rounded w-full py-3 px-5 text-gray-700 mt-6 leading-tight focus:outline-none focus:shadow-outline" id="wallet" name="wallet" type="text" placeholder="wallet name">
 
         <select id="currency" name="currency" class="rounded-xl shadow appearance-none border rounded w-full py-3 px-5 text-gray-800 mt-6 leading-tight focus:outline-none focus:shadow-outline">
-            <option selected="">Click to choose a currency</option>
+            <option value="" disabled selected>Click to choose a currency</option>
             <option value="€">Euro</option>
             <option value="$">USD</option>
             <option value="ALL">ALL</option>
@@ -50,3 +59,28 @@
         <button type="submit" class="mt-14 ml-96 text-emerald-400 hover:text-white border border-emerald-400 hover:bg-emerald-400 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Save</button>
     </form>
 </div>
+
+<script>
+    if ($("#wallet").length > 0) {
+        $("#wallet").validate({
+            rules: {
+                wallet: {
+                    required: true,
+                },
+                balace: {
+                    required: true,
+                    digits: true,
+                },
+            },
+            messages: {
+                wallet: {
+                    required: "Please type a wallet name.",
+                },
+                balace: {
+                    required: "Please enter a initial balance.",
+                    digits: "Initial balance must be a number."
+                },
+            },
+        })
+    }
+</script>

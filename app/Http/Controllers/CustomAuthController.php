@@ -101,16 +101,29 @@ class CustomAuthController extends Controller
         $currency = $request->currency;
         $balance = $request->balace;
 
+        $rules = [
+            'wallet' => 'required',
+            'currency' => 'required',
+            'balace' => 'required|integer',
+        ];
+
+        $customMessages = [
+            'wallet.required' => 'Please type a wallet name.',
+            'currency.required' => 'Please choose a currency.',
+            'balace.integer' => 'Initial balance must be a number.',
+            'balace.required' => 'Please enter an initial balance.',
+        ];
+        $request->validate($rules, $customMessages);
+
         $array = session()->get('id');
 
         $date = Carbon::now();
         $monthName = $date->format('F');
-        $values = array('idUseri' => $array, 'month' => $monthName, 'currency' => $currency, 'amount' => $balance, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now());
+        $values = array('idUseri' => $array, 'month' => $monthName, 'currency' => $request->currency, 'amount' => $request->balace, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now());
         DB::table('budget')->insert($values);
 
-        $values = array('idUseri' => $array, 'name' => $wallet, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now());
+        $values = array('idUseri' => $array, 'name' => $request->wallet, 'created_at' => Carbon::now(), 'updated_at' => Carbon::now());
         DB::table('account')->insert($values);
-
 
         return view('transactions')->with(compact('wallet', 'currency', 'balance'));
     }

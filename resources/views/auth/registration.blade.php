@@ -1,9 +1,8 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
-<!-- Jquery validator = validimi client side -->
-<!-- <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script> -->
-
+<!-- client side -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 
@@ -22,130 +21,6 @@
         color: red;
     }
 </style>
-
-
-
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
-
-
-
-<!-- <body>
-    <div class="container mt-4">
-        @if(session('status'))
-        <div class="alert alert-success">
-            {{ session('status') }}
-        </div>
-        @endif
-        <div class="card">
-            <div class="card-header text-center font-weight-bold">
-                <h2>Laravel 9 jQuery Form Validation Before Submit - Tutsmake.com</h2>
-            </div>
-            <div class="card-body">
-                <form name="product-add" id="product-add" method="post" action="{{url('store-product')}}">
-                    @csrf
-
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Title</label>
-                        <input type="text" id="title" name="title" class="@error('title') is-invalid @enderror form-control">
-                        @error('title')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Product Code</label>
-                        <input type="text" id="code" name="code" class="@error('code') is-invalid @enderror form-control">
-                        @error('code')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Description</label>
-                        <textarea name="description" class="@error('description') is-invalid @enderror form-control"></textarea>
-                        @error('description')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">email</label>
-                        <input type="text" id="email" name="email" class="@error('email') is-invalid @enderror form-control">
-                        @error('email')
-                        <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <script>
-        if ($("#product-add").length > 0) {
-            $("#product-add").validate({
-                rules: {
-                    title: {
-                        required: true,
-                        maxlength: 50
-                    },
-                    email: {
-                        required: true,
-                        email: true
-                    },
-                    code: {
-                        required: true,
-                    },
-                    description: {
-                        required: true,
-                    },
-                },
-                messages: {
-                    title: {
-                        required: "Please enter title",
-                    },
-                    code: {
-                        required: "Please enter valid email",
-                    },
-                    email: {
-                        required: "Please enter email",
-                        email: 'not valid email pleaaseee ugh',
-                    },
-                    description: {
-                        required: "Please enter message",
-                    },
-                },
-            })
-        }
-    </script>
-</body> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <header>
     <div class="w-full h-2/3" style="background-color: #009933">
@@ -227,7 +102,7 @@
             rules: {
                 email: {
                     required: true,
-                    email: true
+                    email: true,
                 },
                 password: {
                     required: true,
@@ -237,17 +112,15 @@
             },
             messages: {
                 password: {
-                    required: "Please provide a password",
-                    minlength: "Your password must be at least 5 characters long",
-                    maxlength: "Your password must be less than 12 characters long"
+                    required: "Please enter a password",
+                    minlength: "Password must be at least 5 characters long",
+                    maxlength: "Password must be less than 12 characters long",
                 },
                 email: {
-                    required: "Please enter email",
-                    email: 'not valid email',
+                    required: "Please enter an email",
+                    email: "Not a valid email."
                 },
             },
         })
     }
 </script>
-
-@include('clientside-validation')
