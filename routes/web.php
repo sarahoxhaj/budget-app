@@ -1,8 +1,10 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
-use App\Http\Controllers\GoogleController;
+use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\SocialiteAuth;
 
 Route::get('/', function () {
     return view('header');
@@ -21,12 +23,6 @@ Route::post('/transaction', [CustomAuthController::class, 'transaction'])->name(
 Route::get('/details', [CustomAuthController::class, 'details'])->name('details');
 Route::get('/statistics', [CustomAuthController::class, 'statistics'])->name('statistics');
 
-
-
-
-
-//google
-Route::prefix('google')->name('google.')->group(function () {
-    Route::get('login', [GoogleController::class, 'loginWithGoogle'])->name('login');
-    Route::any('callback', [GoogleController::class, 'callbackFromGoogle'])->name('callback');
-});
+//github auth
+Route::get('/auth/github/redirect', [SocialiteAuth::class, 'redirect'])->name('redirect');
+Route::get('/auth/github/callback', [SocialiteAuth::class, 'callback'])->name('callback');

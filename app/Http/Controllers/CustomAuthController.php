@@ -4,17 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Budget;
-use App\Models\Account;
-use App\Models\Category;
 use App\Models\Transaction;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
-use Session;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Auth;
 
 class CustomAuthController extends Controller
 {

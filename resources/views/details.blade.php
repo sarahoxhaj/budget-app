@@ -167,7 +167,7 @@
         <div class="grid grid-cols-1 w-64 h-32 mb-6" style="background-color: #edf2f7; border-radius: 25px; padding: 2px; margin-left: 1070px;">
             <form action="#" method="POST">
                 <br>
-                <span align="left" style="margin-left:20"><i class="text-emerald-700">money spent: &nbsp;&nbsp;&nbsp;</i>{{ $d->currency }}{{ $d->total }}</span><br>
+                <span align="left" style="margin-left:20"><i class="text-emerald-700">money spent: &nbsp;&nbsp;&nbsp;</i>{{ $d->currency }}&nbsp;{{ $d->total }}</span><br>
                 <span align="left" style="margin-left:20"><i class="text-emerald-700">spent on: &nbsp;&nbsp;&nbsp;</i>{{ $d->name }}</span><br>
                 <span align="left" style="margin-left:20"><i class="text-emerald-700">description: &nbsp;&nbsp;&nbsp;</i>{{ $d->notes }}</span>
             </form>
