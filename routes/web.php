@@ -26,3 +26,7 @@ Route::get('/statistics', [CustomAuthController::class, 'statistics'])->name('st
 //github auth
 Route::get('/auth/github/redirect', [SocialiteAuth::class, 'redirect'])->name('redirect');
 Route::get('/auth/github/callback', [SocialiteAuth::class, 'callback'])->name('callback');
+
+//google auth
+Route::get('auth/google', [SocialiteAuth::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [SocialiteAuth::class, 'handleGoogleCallback']);

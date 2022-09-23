@@ -13,7 +13,6 @@ class User extends Authenticatable
     protected $fillable = [
         'email',
         'password',
-        'google_id',
         'last_login_at',
     ];
     public $table = 'users';
