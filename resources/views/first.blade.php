@@ -20,6 +20,7 @@
         color: red;
     }
 </style>
+<title>Your Wallet</title>
 <nav class="h-16 bg-white border-gray-200 px-2 sm:px-4 py-1.5 rounded dark:bg-gray-900" style="background-color: #009933">
     <div class="container flex flex-wrap justify-between items-center mx-auto">
         <a href="#" class="flex items-center">

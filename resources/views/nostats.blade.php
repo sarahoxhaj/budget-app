@@ -29,7 +29,7 @@
     }
 </style>
 
-
+<title>Statistics</title>
 <div class="div2 h-auto w-2/5" style="text-align: center">
     <br>
     <p class="text-lg font-medium">No chart available!</p>

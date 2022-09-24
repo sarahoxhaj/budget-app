@@ -15,6 +15,8 @@
     }
 </style>
 
+<title>Statistics</title>
+
 <div class="chart-container">
     <div class="pie-chart-container h-1/3 w-1/3 chart">
         <canvas id="pie-chart"></canvas>

@@ -9,6 +9,7 @@
         border-radius: 25px;
     }
 </style>
+<title>Budget Details</title>
 <div class="div2 h-3/5 w-2/5" style="text-align: center">
     <form action="#" method="POST">
         @csrf

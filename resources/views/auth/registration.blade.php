@@ -21,6 +21,7 @@
         color: red;
     }
 </style>
+<title>Registration</title>
 
 <header>
     <div class="w-full h-2/3" style="background-color: #009933">

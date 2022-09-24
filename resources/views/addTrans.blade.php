@@ -50,6 +50,8 @@
     document.getElementById("theDate").value = today;
 </script>
 
+<title>Add Transaction</title>
+
 <div class="div2 h-auto w-2/5" style="text-align: center">
     <form action="{{route('transaction')}}" method="POST" id="trans" name="trans">
         @csrf

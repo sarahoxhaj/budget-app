@@ -19,7 +19,7 @@
         color: red;
     }
 </style>
-
+<title>Log In</title>
 <header>
     <div class="w-full h-2/3" style="background-color: #009933">
         <br>

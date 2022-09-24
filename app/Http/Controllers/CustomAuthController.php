@@ -11,9 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 class CustomAuthController extends Controller
 {
-
-    public $x;
-
     public function login()
     {
         return "/";
